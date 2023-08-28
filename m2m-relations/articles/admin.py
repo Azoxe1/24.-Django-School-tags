@@ -13,7 +13,7 @@ class ScopeInlineFormset(BaseInlineFormSet):
 
         count_main = 0
         for form in self.forms:
-            if form.cleaned_data['is_main']:
+            if form.cleaned_data.get('is_main'):
                 count_main += 1
             if count_main > 1:
                 raise ValidationError('Главная рубрика отмечена более одного раза!')
@@ -29,7 +29,7 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title']
+    list_display = ['id', 'title', 'published_at', 'image']
     inlines = [ScopeInline]
     
 @admin.register(Scope)
